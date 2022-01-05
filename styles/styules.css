@@ -8,7 +8,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background: #888888; */
 }
 
 .profile-body {
@@ -62,5 +61,23 @@ footer > div {
     }
     footer > div {
         position: relative;    
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    * {
+        color: rgb(200, 200, 200);
+    }
+    .body {
+        background-color: rgb(20, 20, 20);
+    }
+    button {
+        background-color: #285E61 !important;
+    }
+    footer {
+        background-color: #285E61;
+    }
+    hr {
+        border-color: #285E61;
     }
 }

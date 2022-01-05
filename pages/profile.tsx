@@ -3,73 +3,16 @@ import LogoutButton from '../components/logoutButton'
 import { Image, Box, Input, Textarea, Button, Img } from '@chakra-ui/react'
 import React from 'react'
 import dateFormat from 'dateformat'
-
-type SysPrivacy ={
-    description_privacy: boolean
-    member_list_privacy: boolean
-    group_list_privacy: boolean
-    front_privacy: boolean
-    front_history_provacy: boolean
-}
-
-type System = {
-    id: string
-    uuid: string
-    name: string
-    description: string
-    tag: string
-    avatar_url: string
-    banner: string
-    color: string
-    created: Date
-    timezone: string
-    privacy: SysPrivacy
-}
-
-type MemPrivacy = {
-    visibility: boolean
-    name_privacy: boolean
-    description_privacy: boolean
-    bithday_privacy: boolean
-    pronoun_privacy: boolean
-    avatar_privacy: boolean
-    metadata_privacy: boolean
-}
-
-type ProxyTag = {
-    prefix: string
-    suffix: string
-}
-
-type Member = {
-    id: string
-    uuid: string
-    name: string
-    display_name: string
-    color: string
-    birthday: string
-    pronouns: string
-    avatar_url: string
-    banner: string
-    description: string
-    created: Date
-    proxy_tags: Array<ProxyTag>
-    keep_proxy: boolean
-    privacy: MemPrivacy
-}
-
-type Props = {
-    token: string
-    system: System
-    members: Array<Member>
-    // members: any
-}
+import { SysPrivacy, System, MemPrivacy, ProxyTag, Member, Props } from '../components/types'
+// import Modal from 'react-modal'
+import Link from 'next/link'
 
 export async function getServerSideProps(context : any) {
     let parsedCookies
     try {
         parsedCookies = cookie.parse(context.req.headers.cookie)
     } catch (error) {
+        console.log("No-cookie reditect")
         return {
             redirect: {
                 destination: '/',
@@ -96,74 +39,110 @@ export async function getServerSideProps(context : any) {
     })
     const mem:Array<Member> = await memres.json()
 
-    // console.log(sys)
-    // console.log(mem)
+    const memMap = new Map()
+    if (mem.constructor.name === "Array") {
+        mem.forEach((member) => {
+            memMap.set(member.uuid, member)
+        })
+    }
     
     return { 
         props: {
             token: parsedCookies.token,
             system: sys,
-            members: mem,
+            members: Array.from(memMap),
         }
     }
 }
 
 export default function Home(props: Props) {
-    // let router = useRouter()
-
     // For each member returned from the API call, construct a div with their information
     let memberDivs: Array<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = []
     let memberProxies: Array<React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>> = []
     if (props.members.constructor.name === "Array") {
         props.members.forEach((element) => {
+            function privacy(property:String) {
+                if (property == "public") {return true} else return false
+            }
             memberProxies = []
-            memberDivs.push(
-                <div className='member-div' key={element.uuid}>
-                    <div className='member-header'>
-                        <img
-                            src={element.avatar_url || "http://placehold.it/128x128"}
-                            alt={`${element.name}'s profile picture`}
-                            style={{borderColor: "#" + element.color}}
-                        />
-                        <div>
-                            <h1>{element.name}</h1>
-                            <h3>{element.display_name}</h3>
-                            <h3>Prns: {element.pronouns ? element.pronouns : "N/A"}</h3>
-                            <h3>DOB: {element.birthday ? element.birthday : "N/A"}</h3>
-                            <h3>({element.id})</h3>
-                        </div>
-                        <Button
-                            bgColor = "teal.200"
-                            w="24"
-                            mr="4"
-                        >
-                            Edit
-                        </Button>
-                    </div>
-                    <img
-                        src={element.banner}
-                        // alt={`${element.name}'s banner`}
-                        style={element.banner ? {borderColor: '#' + element.color} : {border: 0}}
-                    />
-                    <hr />
-                    <div className='mem-desc-proxy'>
-                        <p id='mem-desc'>
-                            {element.description}
-                        </p>
-                        <div id='mem-proxies'>
-                            Proxies: <br />
-                            {element.proxy_tags.forEach((proxy) => {
-                                memberProxies.push(
-                                    <p className='proxy' key={element.uuid + proxy.prefix + proxy.suffix}>
-                                        {proxy.prefix} text {proxy.suffix}
-                                    </p>
-                                )
-                            })}
-                            {memberProxies}
-                        </div>
-                    </div>
-                </div>
-            )
+            // memberDivs.push(
+            //     <div className='member-div' key={element.uuid}>
+            //         <div className='member-header'>
+            //             <img
+            //                 src={element.avatar_url || "http://placehold.it/128x128"}
+            //                 alt={`${element.name}'s profile picture`}
+            //                 style={element.color ? {borderColor: '#' + element.color} : {border: 0}}
+            //             />
+            //             <div>
+            //                 <h1>{element.name}</h1>
+            //                 <h3>{element.display_name}</h3>
+            //                 <h3>Prns: {element.pronouns ? element.pronouns : "N/A"}</h3>
+            //                 <h3>DOB: {element.birthday ? element.birthday : "N/A"}</h3>
+            //                 <h3>({element.id})</h3>
+            //             </div>
+            //             <Button
+            //                 bgColor = "teal.200"
+            //                 w="24"
+            //                 mr="4"
+            //             >
+            //                 <Link
+            //                     href="/profile/edit"
+            //                     as=""
+            //                 >
+
+            //                 </Link>
+            //             </Button>
+            //         </div>
+            //         <img
+            //             src={element.banner}
+            //             style={element.banner ? {borderColor: '#' + element.color} : {border: 0}}
+            //         />
+            //         <hr />
+            //         <div className='mem-etc'>
+            //             <p id='mem-desc'>
+            //                 {element.description}
+            //             </p>
+            //             <div> {/* Proxies and Privacy */}
+            //                 <div id='mem-proxies'>
+            //                     Proxies:
+            //                     {element.proxy_tags.forEach((proxy) => {
+            //                         memberProxies.push(
+            //                             <p className='proxy' key={element.uuid + proxy.prefix + proxy.suffix}>
+            //                                 {proxy.prefix} text {proxy.suffix}
+            //                             </p>
+            //                         )
+            //                     })}
+            //                     {memberProxies}
+            //                 </div>
+            //                 <div id='mem-priv'>
+            //                     Member privacy settings <br />
+            //                     (Checked is public):
+                                
+            //                     <span><input type="checkbox" checked={privacy(element.privacy.visibility)} disabled={true} name="vis" id="vis" />
+            //                     <label htmlFor="vis"> Member visibility</label></span>
+                                
+            //                     <span> <input type="checkbox" checked={privacy(element.privacy.name_privacy)} disabled={true} name="name" id="name" />
+            //                     <label htmlFor="name"> Member name</label></span>
+                                
+            //                     <span><input type="checkbox" checked={privacy(element.privacy.description_privacy)} disabled={true} name="desc" id="desc" />
+            //                     <label htmlFor="desc"> Member description</label></span>
+                                
+            //                     <span><input type="checkbox" checked={privacy(element.privacy.bithday_privacy)} disabled={true} name="dob" id="dob" />
+            //                     <label htmlFor="dob"> Member birthday</label></span>
+                                
+            //                     <span><input type="checkbox" checked={privacy(element.privacy.pronoun_privacy)} disabled={true} name="prn" id="prn" />
+            //                     <label htmlFor="prn"> Member pronouns</label></span>
+                                
+            //                     <span><input type="checkbox" checked={privacy(element.privacy.avatar_privacy)} disabled={true} name="pfp" id="pfp" />
+            //                     <label htmlFor="pfp"> Member avatar</label></span>
+                                
+            //                     <span><input type="checkbox" checked={privacy(element.privacy.metadata_privacy)} disabled={true} name="meta" id="meta" />
+            //                     <label htmlFor="meta"> Member metadata</label></span>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>
+            // )
         });
     } else {
         // router.push('/')
@@ -173,8 +152,8 @@ export default function Home(props: Props) {
 
     // Return content
     return (
-        <div className='profile-body'>
-            <div className=''>
+        <>
+            <div>
                 {/* Sys left */}
                 <div className='left-col'>
                     <div className='sys-header'>
@@ -184,13 +163,13 @@ export default function Home(props: Props) {
                             className='sys-banner'
                             src={props.system.banner || "http://placehold.it/256x64"}
                             alt={`${props.system.name}'s banner image`}
-                            style={{borderColor: "#" + props.system.color}}
+                            style={props.system.color ? {borderColor: '#' + props.system.color} : {border: 0}}
                         />
                         < img
                             className='sys-pfp'
                             src={props.system.avatar_url || "http://placehold.it/128x128"}
                             alt={`${props.system.name}'s profile picture`}
-                            style={{borderColor: "#" + props.system.color}}
+                            style={props.system.color ? {borderColor: '#' + props.system.color} : {border: 0}}
                         />
                     </div>
                     <div className='sys-extra'>
@@ -222,6 +201,6 @@ export default function Home(props: Props) {
                     <LogoutButton />
                 </div>
             </footer>
-        </div>
+        </>
     )
 }

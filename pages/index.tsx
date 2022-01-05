@@ -13,33 +13,59 @@ type Props = {
 export async function getServerSideProps(context : any) {
     const parsedCookies = cookie.parse(context.req.headers.cookie || "")
     
-    // if (parsedCookies.token != "" || undefined || null) {
-    //     return {
-    //         redirect: {
-    //             destination: '/profile',
-    //             permenant: 'true'
-    //         }
-    //     }
-    // }
-    
     return { props: { token: parsedCookies.token || "" } }
 }
 
-export default function Home({token} : any, props:Props) {
-    const [value, setValue] = React.useState('')
-    const handleChange = (event : any) => setValue(event.target.value)
+export default function Home() {
+    // Initialize state for handling buttons and inputs
+    const [state, setState] = React.useState({
+        value: '',
+        edit: true,
+        inputPlaceholder: "pk;token",
+        commandMessage: "Enter your PluralKit token here. Use pk;token to get it."
+    })
+    const handleChange = (event : any) => setState({
+        value: event.target.value,
+        edit: state.edit,
+        inputPlaceholder: state.inputPlaceholder,
+        commandMessage: state.commandMessage
+    })
 
     const router = useRouter()
 
-    const logIn = () => {fetch("/api/login", {
-        method: "post",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: value }),
-    });
-        router.push("/profile");
+    async function login() {
+        if (state.edit) {
+            await fetch("/api/login", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ token: state.value }),
+            })
+            router.push("/profile");
+            
+        } else {
+            router.push(`/profile/${state.value}`)
+        }
     }
+
+    function setToView() {
+        setState({
+            value: state.value,
+            edit: false, inputPlaceholder: "pk;s",
+            commandMessage: "Enter a 5-letter system id here. Use pk;s to get your own."
+        })
+    }
+
+    function setToEdit() {
+        setState({
+            value: state.value,
+            edit: true,
+            inputPlaceholder: "pk;token",
+            commandMessage: "Enter your PluralKit token here. Use pk;token to get it."
+        })
+    }
+
 
     return (
         <div className="body">
@@ -48,18 +74,33 @@ export default function Home({token} : any, props:Props) {
             </Head>
             <div className="container">
                 <h1>Community PluralKit web interface :D</h1>
-                <Text mb='8px'>Enter your PluralKit token here. Use pk;token to get it.</Text>
-                <Input 
-                    my={2}
-                    className='aaa'
-                    value={value}
+                <div className='view-edit-container'>
+                    <Button 
+                        onClick={setToEdit}
+                        id='edit-button'
+                        bgColor = "teal.200"
+                        isDisabled={state.edit}
+                    >
+                        Edit your system
+                    </Button>
+                    <Button 
+                        onClick={setToView}
+                        id='view-button'
+                        bgColor = "teal.200"
+                        isDisabled={!state.edit}
+                    >
+                        View public system info
+                    </Button>
+                </div>
+                <Input
+                    value={state.value}
                     onChange={handleChange}
-                    placeholder='pk;token'
-                    size='sm'
+                    placeholder={state.inputPlaceholder}
                 />
+                <p>{state.commandMessage}</p>
                 <Button 
-                    onClick={logIn}
-                    isDisabled = {value ? false : true}
+                    onClick={login}
+                    isDisabled = {state.value ? false : true}
                     bgColor = "teal.200"
                     mr={4}
                 >
@@ -68,11 +109,26 @@ export default function Home({token} : any, props:Props) {
 
             </div>
             <footer>
-                <a className="footer-links" href="https://github.com/xSke/PluralKit">PluralKit by xSke on GitHub</a>
+                <a
+                    className="footer-links"
+                    href="https://github.com/xSke/PluralKit"
+                >
+                    PluralKit by xSke on GitHub
+                </a>
                 {" | "}
-                <a className="footer-links" href="https://github.com/greysdawn/pluralkit-web">Inspiration from Greysdawn's Plurakit Web</a>
+                <a
+                    className="footer-links"
+                    href="https://github.com/greysdawn/pluralkit-web"
+                >
+                    Inspiration from Greysdawn's Plurakit Web
+                </a>
                 {" | "}
-                <a className="footer-links" href="https://github.com/airrocket/pk-web">Source code</a>
+                <a
+                    className="footer-links"
+                    href="https://github.com/airrocket/pk-web"
+                >
+                    Source code
+                </a>
             </footer>
             {/* <Box
                 display="flex"

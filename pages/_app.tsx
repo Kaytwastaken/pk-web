@@ -1,6 +1,7 @@
 // import '../styles/globals.css'
 import '../styles/styules.css'
 import '../styles/profile.css'
+import '../styles/home.css'
 import type { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 
