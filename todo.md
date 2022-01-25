@@ -2,6 +2,6 @@
 
 [ ] Fix home styles on mobile
 
-[ ] ✨editing✨ *cries*
+[ ] ✨editing✨ 80%!!!
 
 [ ] /profile/sysid routes for sharing

@@ -2,9 +2,10 @@ import React from 'react'
 import cookie from 'cookie'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import LogoutButton from '../components/logoutButton'
+import Footer from '../components/footer'
 
-import { Input, Text, Button, Box } from '@chakra-ui/react'
+import { Input, Tooltip } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/button'
 
 type Props = {
     token: string
@@ -52,7 +53,8 @@ export default function Home() {
     function setToView() {
         setState({
             value: state.value,
-            edit: false, inputPlaceholder: "pk;s",
+            edit: false,
+            inputPlaceholder: "xxxxx",
             commandMessage: "Enter a 5-letter system id here. Use pk;s to get your own."
         })
     }
@@ -78,21 +80,28 @@ export default function Home() {
                     <Button 
                         onClick={setToEdit}
                         id='edit-button'
-                        bgColor = "teal.200"
-                        isDisabled={state.edit}
+                        colorScheme = "teal"
+                        variant={state.edit ? "solid" : "outline"}
                     >
                         Edit your system
                     </Button>
-                    <Button 
-                        onClick={setToView}
-                        id='view-button'
-                        bgColor = "teal.200"
-                        isDisabled={!state.edit}
-                    >
-                        View public system info
-                    </Button>
+                    <Tooltip label="Coming soon!™">
+                        <Button 
+                            onClick={setToEdit}
+                            // onClick={setToView}
+                            id='view-button'
+                            colorScheme = "teal"
+                            variant={state.edit ? "outline" : "solid"}
+                            
+                            // Because not done yet lol
+                            // isDisabled={true}
+                        >
+                            View public system info
+                        </Button>
+                    </Tooltip>
                 </div>
                 <Input
+                    className='token'
                     value={state.value}
                     onChange={handleChange}
                     placeholder={state.inputPlaceholder}
@@ -101,14 +110,14 @@ export default function Home() {
                 <Button 
                     onClick={login}
                     isDisabled = {state.value ? false : true}
-                    bgColor = "teal.200"
+                    colorScheme = "teal"
                     mr={4}
                 >
                     Submit
                 </Button>
 
             </div>
-            <footer>
+            {/* <footer>
                 <a
                     className="footer-links"
                     href="https://github.com/xSke/PluralKit"
@@ -129,25 +138,8 @@ export default function Home() {
                 >
                     Source code
                 </a>
-            </footer>
-            {/* <Box
-                display="flex"
-                fontSize="lg"
-                pos="absolute"
-                bottom="0"
-                bgColor="teal.300"
-                color="white"
-                w="full"
-                h="min"
-                alignItems="center"
-                justifyContent="center"
-            >
-                <a className="footer-links" href="https://github.com/xSke/PluralKit">PluralKit by xSke on GitHub</a>
-                {" | "}
-                <a className="footer-links" href="https://github.com/greysdawn/pluralkit-web">Inspiration from Greysdawn's Plurakit Web</a>
-                {" | "}
-                <a className="footer-links" href="https://github.com/airrocket/pk-web">Source code</a>
-            </Box> */}
+            </footer> */}
+            <Footer/>
         </div>
     )
 }

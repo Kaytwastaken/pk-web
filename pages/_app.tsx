@@ -1,4 +1,3 @@
-// import '../styles/globals.css'
 import '../styles/styules.css'
 import '../styles/profile.css'
 import '../styles/home.css'

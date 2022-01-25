@@ -7,10 +7,45 @@ p {
     display: flex;
     flex-direction: column;
     background-color: rgb(240, 240, 240);
-    height: calc(100vh - 4rem);
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    max-height: 1000%;
     width: 20rem;
-    align-items: center;
     overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.left-col.edit {
+    display: block;
+    margin: 0;
+}
+
+.sys-buttons {
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.left-col div > button {
+    margin: 1.5rem .5rem 0 .5rem;
+}
+
+.left-col input, .left-col textarea {
+    width: 90%;
+    margin-top: 1rem;
+}
+
+.left-col textarea {
+    height: 10rem !important;
+}
+
+#sys-banner, #sys-desc {
+    margin-bottom: 1rem;
+}
+
+#sys-desc {
+    height: calc(100vh - 8rem) !important;
+    margin: 1rem auto 0 1rem;
 }
 
 .sys-header {
@@ -23,9 +58,13 @@ p {
     text-align: center;
 }
 
+.sys-header textarea {
+    height: 10rem;
+}
+
 .sys-pfp {
     border-radius: 9999px;
-    border: 6px solid;
+    border: 4px solid;
     width: 60%;
 }
 
@@ -48,6 +87,7 @@ p {
     position: absolute;
     right: 0px;
     bottom: 4rem;
+    top: 0;
     height: calc(100vh - 4rem);
     width: calc(100vw - 20rem);
 }
@@ -59,7 +99,8 @@ p {
     text-align: left;
 }
 
-.member-div > img {
+/* All images, meant to target banner */
+.member-div img {
     width: 90%;
     margin: 0 auto 1rem auto;
     border: 4px solid #4FD1C5;
@@ -75,12 +116,13 @@ p {
     justify-content: space-around;
 }
 
-.member-header > img {
+/* Just pfp */
+.member-header img {
     width: 8rem;
     height: 8rem;
     margin: 1rem;
-    border-radius: 100%;
-    border: 6px solid #4FD1C5;
+    border-radius: 9999px;
+    border: 4px solid #4FD1C5;
 }
 
 hr {
@@ -91,6 +133,8 @@ hr {
     border-bottom: 3px solid #4FD1C5;
 }
 
+
+/* Member styles */
 .mem-etc {
     display: flex;
 }
@@ -110,14 +154,70 @@ hr {
     flex-direction: column;
 }
 
-input[type=checkbox][disabled] {
-    background-color: #B2F5EA;
-}
-
 .proxy {
     padding: 0;
 }
 
+
+/* Member Mutable Styles */
+.edit {
+    margin-top: 1rem;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+}
+
+.pfp-url {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+    width: 90%;
+    grid-column: 1 / 3;
+}
+
+.pfp-url textarea {
+    height: 10rem;
+}
+
+.name-etc {
+    margin-top: 1rem;
+    width: 90%;
+}
+
+.name-etc input {
+    margin: .5rem 0 0 0;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons > button {
+    margin: .5rem 1rem .5rem auto
+}
+
+.banner-url {
+    margin: 1rem 0 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner-url textarea {
+    width: 90%;
+    height: 5rem;
+}
+
+.mem-etc textarea {
+    width: 60%;
+    margin: 1rem auto 1rem auto;
+    height: 20rem;
+}
+
+
+/* Media Queries */
 @media screen and (max-width: 1600px) {
     .right-col {
         grid-template-columns: 1fr 1fr;
@@ -127,6 +227,9 @@ input[type=checkbox][disabled] {
     }
     #mem-desc { 
         width: 100%;
+    }
+    .mem-etc textarea {
+        width: 90%;
     }
     #mem-proxies {
         margin-left: 1rem;
@@ -151,7 +254,6 @@ input[type=checkbox][disabled] {
         width: 100vw;
         align-items: flex-start;
         padding: 1rem;
-        /* padding-left: 3rem; */
     }
     .sys-header {
         display: grid;

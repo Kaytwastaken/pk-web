@@ -21,6 +21,6 @@
     margin: .5rem .5rem .5rem 0;
 }
 
-input {
+input.token {
     border-top-left-radius: 0 !important;
 }

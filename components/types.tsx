@@ -55,5 +55,5 @@ export type Member = {
 export type Props = {
     token: string
     system: System
-    members: Array<Member>
+    members: Array<Array<Member>>
 }

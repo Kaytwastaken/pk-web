@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/button"
 import { useRouter } from 'next/router'
 
 export default function LogoutButton() {
@@ -15,7 +15,10 @@ export default function LogoutButton() {
     }
     
     return (
-        <Button onClick={logOut}>
+        <Button
+            onClick={logOut}
+            colorScheme='teal'
+        >
             Log out
         </Button>
     )
