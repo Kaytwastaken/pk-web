@@ -15,3 +15,5 @@ v1.0.0
 v1.1.0
 
 [ ] /view/[sid] routes
+
+[ ] API caching on /[sid] routes and /profile
