@@ -16,6 +16,7 @@ Built with [Next.js](https://github.com/vercel/next.js).
 
 * v1.1.0
   * View public system information
+  * API caching
 
 ## Development
 
