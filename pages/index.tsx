@@ -75,7 +75,8 @@ export default function Home() {
                 
             </Head>
             <div className="container">
-                <h1>Community PluralKit web interface :D</h1>
+                <h1>PluralKit web interface :D</h1>
+                <h3>Made by Kayt_was_taken! (<a href="https://github.com/kaytwastaken">GitHub</a>) (<a href="https://kayt.dev">Personal</a>)</h3>
                 <div className='view-edit-container'>
                     <Button 
                         onClick={setToEdit}
@@ -87,7 +88,7 @@ export default function Home() {
                     </Button>
                     <Tooltip label="Coming soon!™">
                         <Button 
-                            onClick={setToEdit}
+                            // onClick={setToEdit}
                             // onClick={setToView}
                             id='view-button'
                             colorScheme = "teal"
@@ -117,28 +118,6 @@ export default function Home() {
                 </Button>
 
             </div>
-            {/* <footer>
-                <a
-                    className="footer-links"
-                    href="https://github.com/xSke/PluralKit"
-                >
-                    PluralKit by xSke on GitHub
-                </a>
-                {" | "}
-                <a
-                    className="footer-links"
-                    href="https://github.com/greysdawn/pluralkit-web"
-                >
-                    Inspiration from Greysdawn's Plurakit Web
-                </a>
-                {" | "}
-                <a
-                    className="footer-links"
-                    href="https://github.com/airrocket/pk-web"
-                >
-                    Source code
-                </a>
-            </footer> */}
             <Footer/>
         </div>
     )

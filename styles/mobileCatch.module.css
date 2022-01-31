@@ -1,0 +1,36 @@
+
+
+.mobile {
+    display: none;
+}
+
+.mobile {
+    height: 100vh;
+    width: 100vw;
+    
+    justify-items: center;
+    align-items: center;
+}
+
+.link {
+    text-decoration: underline;
+    color: var(--special-primary)
+}
+
+.mobile > h2 {
+    position: relative;
+    top: -5rem;
+    width: 90%;
+    background-color: var(--background-secondary);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .mobile {
+        display: grid;
+    }
+    .desktop {
+        display: none;
+    }
+}

@@ -161,9 +161,8 @@ export default function SystemInfo({props} : { props: Props }) {
                 <p>({props.system.id})</p>
                 < img
                     className='sys-banner'
-                    src={props.system.banner || "http://placehold.it/256x64"}
-                    alt={`${props.system.name}'s banner image`}
-                    style={props.system.color ? {borderColor: '#' + props.system.color} : {border: 0}}
+                    src={props.system.banner}
+                    style={props.system.banner ? {borderColor: '#' + props.system.color} : {border: 0}}
                 />
                 < img
                     className='sys-pfp'

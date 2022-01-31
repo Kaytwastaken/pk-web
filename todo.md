@@ -1,8 +1,8 @@
 v0.1.0
 
 [ ] Prepare for release
-  * Remove unused dependencies, etc
-  * favicon
+  <!-- * Remove unused dependencies, etc -->
+  <!-- * favicon -->
   * contribution guidelines?
   * prepare server (domain, nginx, etc)
 

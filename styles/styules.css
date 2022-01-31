@@ -8,12 +8,24 @@ textarea ~ grammarly-extension {
     margin: 0;
 }
 
-.body {
+body {
     width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+::-webkit-scrollbar {
+    width: 10px
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-secondary);
 }
 
 .profile-body {
@@ -28,7 +40,6 @@ h1 {
 
 h2 {
     font-size: 1.5rem !important;
-    margin: 1rem 1rem 0 1rem !important;
 }
 
 .container {
@@ -36,58 +47,11 @@ h2 {
     margin-bottom: 8rem;
 }
 
-footer {
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    background: #4FD1C5;
-    width: 100%;
-    height: 4rem;
-    align-items: center;
-    justify-content: center;
-}
-  
-footer a {
-    margin-left: 2rem;
-    margin-right: 2rem;
-}
-
-#todo-link {
-    margin: 0;
-}
-
-footer a:hover {
+.container > h3 > a {
     text-decoration: underline;
 }
 
-footer > div#version-info {
-    position: absolute;
-    left: 1rem;
-    bottom: 1.25rem;
-}
-
-#todo-info {
-    position: fixed;
-    left: 0;
-    bottom: 4rem;
-    background-color: #3eaca1;
-    width: fit-content;
-}
-
-#todo-info p {
-    padding: 1rem 0 0 1rem;
-}
-
-#todo-info p:last-of-type {
-    margin-bottom: 1rem;
-}
-
-footer > #logout {
-    position: absolute;
-    right: 1rem;
-}
-
-@media screen and (max-width: 960px) {
+/* @media screen and (max-width: 960px) {
     footer {
         height: 8rem;
     }
@@ -97,25 +61,16 @@ footer > #logout {
     footer > div {
         position: relative;    
     }
-}
+} */
 
 @media (prefers-color-scheme: dark) {
     * {
-        color: rgb(200, 200, 200);
+        color: var(--text);
     }
-    .body {
-        background-color: rgb(20, 20, 20);
-    }
-    /* button {
-        background-color: #285E61 !important;
-    } */
-    footer {
-        background-color: #285E61;
-    }
-    #todo-info {
-        background-color: #1e4a4d;
+    body {
+        background-color: var(--background-primary) !important;
     }
     hr {
-        border-color: #285E61;
+        border-color: var(--special-primary);
     }
 }

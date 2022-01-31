@@ -1,6 +1,5 @@
 import cookie from 'cookie'
 import { System, Member, Props } from '../components/types'
-import Link from 'next/link'
 
 // Custom components
 import LogoutButton from '../components/logoutButton'

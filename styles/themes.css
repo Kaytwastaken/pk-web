@@ -1,0 +1,19 @@
+:root {
+    --text: rgb(10, 10, 10);
+    --background-primary: rgb(245, 245, 245);
+    --background-secondary: rgb(230, 230, 230);
+    --special-primary: rgb(75, 210, 200);
+    --special-secondary: rgb(70, 185, 180);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: rgb(220, 220, 220);
+        --background-primary: rgb(20, 20, 20);
+        --background-secondary: rgb(60, 60, 60);
+        --special-primary: rgb(40, 125, 125);
+        --special-secondary: rgb(30, 75, 75);
+        --scrollbar-primary: rgb(40, 40, 40);
+        --scrollbar-secondary: rgb(80, 80, 80);
+    }
+}
