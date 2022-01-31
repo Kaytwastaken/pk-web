@@ -17,3 +17,8 @@ v1.1.0
 [ ] /view/[sid] routes
 
 [ ] API caching on /[sid] routes and /profile
+
+
+extra
+
+[ ] make favicon match color scheme
